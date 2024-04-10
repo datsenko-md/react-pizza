@@ -5,6 +5,7 @@ import React from 'react';
 
 function PizzaBlock(props) {
   const { title, price } = props;
+  const [count, setCount] = React.useState(0);
 
   return (
     <div className="pizza-block">
@@ -27,7 +28,11 @@ function PizzaBlock(props) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <button
+          type="button"
+          className="button button--outline button--add"
+          onClick={() => setCount(count + 1)}
+        >
           <svg
             width="12"
             height="12"
@@ -41,8 +46,8 @@ function PizzaBlock(props) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          <i>{count}</i>
+        </button>
       </div>
     </div>
   );

@@ -1,6 +1,20 @@
 import React from 'react';
+import cn from 'classnames';
 
 function Sort() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const sorts = [
+    { id: 1, sortBy: 'popularity', name: 'популярности' },
+    { id: 2, sortBy: 'price', name: 'цене' },
+    { id: 3, sortBy: 'name', name: 'алфавиту' },
+  ];
+  const [activeSort, setActiveSort] = React.useState(sorts[0]);
+
+  const selectSort = (sort) => {
+    setActiveSort(sort);
+    setIsOpen(false);
+  };
+
   return (
     <div className="sort">
       <div className="sort__label">
@@ -17,15 +31,25 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => setIsOpen(!isOpen)}>
+          {activeSort.name}
+        </span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {isOpen && (
+        <div className="sort__popup">
+          <ul>
+            {sorts.map((sort) => (
+              <li
+                key={sort.id}
+                className={cn({ active: sort.id === activeSort.id })}
+                onClick={() => selectSort(sort)}
+              >
+                {sort.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
